@@ -1,0 +1,30 @@
+[Unit]
+Description=Authenticated HTTP to CLI harness bridge
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=agentd
+Group=agentd
+WorkingDirectory=/opt/cli-harness-expose-starter
+EnvironmentFile=/etc/agentd.env
+Environment=HOME=/var/lib/agentd
+Environment=PATH=/opt/cli-harness-expose-starter/.venv/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/opt/cli-harness-expose-starter/.venv/bin/agentd serve
+Restart=on-failure
+RestartSec=3
+KillMode=control-group
+TimeoutStopSec=15
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/agentd
+TasksMax=512
+MemoryMax=3G
+CPUQuota=150%
+
+[Install]
+WantedBy=multi-user.target

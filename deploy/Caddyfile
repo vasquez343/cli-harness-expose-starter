@@ -1,0 +1,14 @@
+# Replace api.example.com with your domain; point DNS at this server.
+api.example.com {
+    request_body {
+        max_size 128KB
+    }
+    reverse_proxy 127.0.0.1:8800 {
+        flush_interval -1
+    }
+    header {
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "no-referrer"
+    }
+}
